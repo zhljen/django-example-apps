@@ -13,9 +13,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-location = lambda x: os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), x)
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# location = lambda x: os.path.join(
+#     os.path.dirname(os.path.realpath(__file__)), x)
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -38,7 +40,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog'
+    'blog',
+    'account',
+    'social.apps.django_app.default',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,7 +62,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            location('blog'),
+            #location('templates'),
+            #location('account'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -104,13 +109,35 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = location('static')
+#STATIC_ROOT = location('static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+from django.core.urlresolvers import reverse_lazy
+
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('logout')
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.Facebook2OAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+)
 
 #the list of files that django look for static files
-STATICFILES_DIRS = (
-    location('static/css'),
-)
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
+# STATICFILES_DIRS = (
+#     location('static/css'),
+# )
+# STATICFILES_FINDERS = (
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# )
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1529763880670008' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '65f6e37ba8687f4df0e90d612dd3d6bc' # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
