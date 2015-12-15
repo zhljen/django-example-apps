@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'blog',
     'account',
     'social.apps.django_app.default',
+    'images',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -138,6 +139,6 @@ AUTHENTICATION_BACKENDS = (
 #     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 # )
 
-SOCIAL_AUTH_FACEBOOK_KEY = '1529763880670008' # Facebook App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = '65f6e37ba8687f4df0e90d612dd3d6bc' # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_KEY = '' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '' # Facebook App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
